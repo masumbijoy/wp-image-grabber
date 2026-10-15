@@ -1,0 +1,12 @@
+exec(open('test_ext.py').read().split("with sync_playwright() as p:")[0])
+with sync_playwright() as p:
+    ctx, sw = launch(p, variant('C', ['http://site.test/*']))
+    pg, errs = open_panel(ctx, sw, 'http://site.test:8124/store/')
+    print('panel version:', R(pg,"r.querySelector('#ver').textContent"), '| title:', sw.evaluate("async()=>{const [t]=await chrome.tabs.query({url:'http://site.test:8124/store/'}); return await chrome.action.getTitle({tabId:t.id})}"))
+    print('default src =', R(pg,"r.querySelector('#src').value"))
+    info = run_zip(pg); print(info['mode'], info['n']); print(info['log'][-400:])
+    z = download(pg); imgs, sizes, rows = summarize(z)
+    print(len(imgs), sizes, [r[3].split('/')[-1] for r in rows[1:]], errs)
+    R(pg,"r.querySelector('#src').value='main'; r.querySelector('#src').dispatchEvent(new Event('change')); 1"); pg.wait_for_timeout(500)
+    print('grid-mode thumbs:', pg.evaluate("window.__wpigGrab.items.map(i=>i.img.split('/').pop())"))
+    ctx.close()

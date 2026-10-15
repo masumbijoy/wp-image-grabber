@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WP Image Grabber</title>
+<style>
+  :root{--bg:#f6f6f8;--card:#fff;--ink:#1c1c1e;--mut:#666;--line:#dcdce1;--acc:#1a73e8}
+  @media (prefers-color-scheme:dark){:root{--bg:#161618;--card:#202024;--ink:#eee;--mut:#a0a0a8;--line:#3a3a40}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  main{max-width:680px;margin:0 auto;padding:32px 16px 64px}
+  h1{font-size:24px;margin:0 0 4px}
+  .sub{color:var(--mut);margin:0 0 24px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+  .card h2{font-size:15px;margin:0 0 8px}
+  ol,ul{margin:0;padding-left:20px} li{margin:6px 0}
+  button{padding:8px 14px;border-radius:8px;border:1px solid var(--acc);background:var(--acc);color:#fff;font-size:14px;cursor:pointer}
+  button.sec{background:transparent;color:var(--acc)}
+  kbd{background:var(--bg);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;font-size:12px}
+  .mut{color:var(--mut);font-size:13px}
+  #state{margin:8px 0;font-weight:600}
+</style>
+</head>
+<body>
+<main>
+  <h1>WP Image Grabber <small id="ver" style="font-size:13px;font-weight:400;color:var(--mut)"></small></h1>
+  <p class="sub">Collects images from WordPress sites. Everything runs in your browser; nothing is uploaded.</p>
+
+  <div class="card">
+    <h2>How to use</h2>
+    <ol>
+      <li>Open any page on a WordPress site: a shop category, a blog archive, a gallery or a single post.</li>
+      <li>Click the extension icon (puzzle piece → pin it) or press <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd>.</li>
+      <li>Leave <b>What to collect</b> on Auto-detect, press <b>Scan page</b>, check the thumbnails, then press <b>Download</b>.</li>
+    </ol>
+    <p class="mut">Files are named <code>prefix_001.webp</code>, <code>prefix_002.webp</code>… in page order. The defaults are 700 × 700 px at 92% quality; you can change them in the panel and they are remembered.</p>
+  </div>
+
+  <div class="card">
+    <h2>Images stored on another domain (CDN)</h2>
+    <p class="mut" style="margin-top:0">Many sites keep images on a CDN (for example i0.wp.com). Chrome only lets the page read those images if the CDN allows it. If it does not, the grabber can fetch them for you, but that needs permission to access other websites.</p>
+    <div id="state"></div>
+    <button id="allow">Allow other domains</button>
+    <button id="revoke" class="sec">Remove this permission</button>
+    <p class="mut">The permission is only used to download image files that the page you are on already shows. It never reads other page content, ignores local and private network addresses, and only works on tabs where you opened the panel.</p>
+  </div>
+
+  <div class="card">
+    <h2>Good to know</h2>
+    <ul class="mut">
+      <li>It uses your normal connection and pauses between requests (400 ms by default). If a site blocks your connection, it cannot load pages either.</li>
+      <li>For infinite-scroll or “load more” pages tick “Scroll this page first”.</li>
+      <li>Non-square pictures are fitted inside the square on white, never stretched.</li>
+      <li>Chrome blocks extensions on chrome:// pages and the Chrome Web Store.</li>
+      <li>Use the images in line with the site’s terms and the owners’ rights.</li>
+    </ul>
+  </div>
+</main>
+<script src="options.js"></script>
+</body>
+</html>
